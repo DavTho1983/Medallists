@@ -18,4 +18,16 @@ country_names_beach_volley_medals_1996 = beach_volley_medals_1996.loc[:, 'NOC']
 medal_counts_beach_volley_1996 = country_names_beach_volley_medals_1996.value_counts()
 
 # Print top 15 countries ranked by medals
-print(medal_counts_beach_volley_1996.head(15))
+print(medal_counts_beach_volley_1996.head())
+
+# Construct the pivot table: counted
+counted_1996 = medallists_1996.pivot_table(index='NOC', values='Athlete', columns=['Medal', 'Edition'], aggfunc='count')
+
+# Create the new column: counted['totals']
+counted_1996['totals'] = counted_1996.sum(axis='columns')
+
+# Sort counted by the 'totals' column
+counted_1996 = counted_1996.sort_values(by='totals', ascending=False)
+
+# Print the top 15 rows of counted
+print(counted_1996.head(15))
